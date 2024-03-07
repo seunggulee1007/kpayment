@@ -1,0 +1,11 @@
+jwt:
+  token:
+    header: Authorization
+    issuer: seunggulee
+    client-secret: kakaopayinsurancetlzmfltqlalfqjsgh
+    expiry-seconds: 300
+
+
+
+server:
+  port: 9232
