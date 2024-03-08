@@ -1,6 +1,10 @@
 package com.kakaoinsurance.payment.common.security;
 
-import com.kakaoinsurance.payment.adapter.out.jwt.*;
+import com.kakaoinsurance.payment.adapter.out.jwt.EntryPointHandler;
+import com.kakaoinsurance.payment.adapter.out.jwt.Jwt;
+import com.kakaoinsurance.payment.adapter.out.jwt.JwtAccessDeniedHandler;
+import com.kakaoinsurance.payment.adapter.out.jwt.JwtAuthenticationTokenFilter;
+import com.kakaoinsurance.payment.common.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +50,7 @@ public class SecurityConfig {
                 SessionCreationPolicy.STATELESS)).authorizeHttpRequests(request -> request.requestMatchers("/swagger-ui/**",
                                                                                                            "/v3/api-docs/**",
                                                                                                            "/swagger-resources/**",
-                                                                                                           "/member/auth/**",
+                                                                                                           "/api/member/auth/**",
                                                                                                            "/actuator/**").permitAll()
                 .anyRequest().authenticated()).addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

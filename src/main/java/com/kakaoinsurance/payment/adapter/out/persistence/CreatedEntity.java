@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class CreatedEntity {
+class CreatedEntity {
 
     @CreatedBy
     protected Long createdBy;

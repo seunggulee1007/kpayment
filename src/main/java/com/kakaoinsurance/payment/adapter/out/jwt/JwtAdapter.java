@@ -1,7 +1,7 @@
 package com.kakaoinsurance.payment.adapter.out.jwt;
 
 import com.kakaoinsurance.payment.application.port.out.AuthenticationJwtPort;
-import com.kakaoinsurance.payment.common.PersistenceAdapter;
+import com.kakaoinsurance.payment.common.annotations.PersistenceAdapter;
 import com.kakaoinsurance.payment.domain.JwtToken;
 import com.kakaoinsurance.payment.domain.Member;
 import com.kakaoinsurance.payment.domain.MemberRole;

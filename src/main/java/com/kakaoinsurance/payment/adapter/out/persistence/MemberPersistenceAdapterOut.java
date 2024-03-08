@@ -2,9 +2,9 @@ package com.kakaoinsurance.payment.adapter.out.persistence;
 
 import com.kakaoinsurance.payment.application.port.out.GetMemberPort;
 import com.kakaoinsurance.payment.application.port.out.RegisterMemberOutPort;
-import com.kakaoinsurance.payment.common.PersistenceAdapter;
 import com.kakaoinsurance.payment.common.advice.exceptions.AlreadyPresentAccountException;
 import com.kakaoinsurance.payment.common.advice.exceptions.NotValidMemberException;
+import com.kakaoinsurance.payment.common.annotations.PersistenceAdapter;
 import com.kakaoinsurance.payment.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

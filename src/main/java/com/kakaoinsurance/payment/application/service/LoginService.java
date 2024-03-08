@@ -4,7 +4,7 @@ import com.kakaoinsurance.payment.application.port.in.LoginCommand;
 import com.kakaoinsurance.payment.application.port.in.LoginUseCase;
 import com.kakaoinsurance.payment.application.port.out.AuthenticationJwtPort;
 import com.kakaoinsurance.payment.application.port.out.GetMemberPort;
-import com.kakaoinsurance.payment.common.UseCase;
+import com.kakaoinsurance.payment.common.annotations.UseCase;
 import com.kakaoinsurance.payment.domain.JwtToken;
 import com.kakaoinsurance.payment.domain.Member;
 import lombok.RequiredArgsConstructor;

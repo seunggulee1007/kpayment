@@ -9,3 +9,26 @@ jwt:
 
 server:
   port: 9232
+spring:
+  application:
+    name: payment
+  profiles:
+    include: encrypt
+
+string:
+  card-encrypt-separator: '|'
+  masking: '*'
+
+logging:
+  level:
+    root: debug
+    org:
+      hirbernate:
+        SQL: debug
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE
+    com:
+      kakaoinsurance:
+        payment: DEBUG

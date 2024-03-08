@@ -16,7 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @Entity
 @Table(name = "account")
-public class MemeberEntity extends UpdatedEntity {
+class MemeberEntity extends UpdatedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

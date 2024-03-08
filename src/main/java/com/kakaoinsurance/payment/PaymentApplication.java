@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan(basePackages = {"com.kakaoinsurance.payment.common.properties",
+    "com.ulisesbocchio.jasyptspringboot.properties"})
+
 public class PaymentApplication {
 
     public static void main(String[] args) {

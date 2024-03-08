@@ -1,5 +1,6 @@
 package com.kakaoinsurance.payment.adapter.out.jwt;
 
+import com.kakaoinsurance.payment.common.properties.JwtProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -3,7 +3,7 @@ package com.kakaoinsurance.payment.application.service;
 import com.kakaoinsurance.payment.application.port.in.GetMemberQuery;
 import com.kakaoinsurance.payment.application.port.in.GetMemberUseCase;
 import com.kakaoinsurance.payment.application.port.out.GetMemberPort;
-import com.kakaoinsurance.payment.common.UseCase;
+import com.kakaoinsurance.payment.common.annotations.UseCase;
 import com.kakaoinsurance.payment.domain.Member;
 import lombok.RequiredArgsConstructor;
 

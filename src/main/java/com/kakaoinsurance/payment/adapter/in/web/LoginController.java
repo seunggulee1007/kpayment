@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/auth/login")
+@RequestMapping("/api/member/auth/login")
 public class LoginController {
 
     private final LoginUseCase loginUseCase;

@@ -4,7 +4,7 @@ import com.kakaoinsurance.payment.application.port.in.RegisterMemberCommand;
 import com.kakaoinsurance.payment.application.port.in.RegisterMemberUseCase;
 import com.kakaoinsurance.payment.application.port.in.RegisteredMember;
 import com.kakaoinsurance.payment.application.port.out.RegisterMemberOutPort;
-import com.kakaoinsurance.payment.common.UseCase;
+import com.kakaoinsurance.payment.common.annotations.UseCase;
 import com.kakaoinsurance.payment.domain.Member;
 import lombok.RequiredArgsConstructor;
 

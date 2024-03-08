@@ -1,4 +1,4 @@
-package com.kakaoinsurance.payment.adapter.out.jwt;
+package com.kakaoinsurance.payment.common.properties;
 
 import lombok.Getter;
 import lombok.Setter;
