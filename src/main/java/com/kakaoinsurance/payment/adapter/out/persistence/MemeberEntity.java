@@ -87,20 +87,6 @@ public class MemeberEntity extends UpdatedEntity {
         this.loginCount++;
     }
 
-    /**
-     * 비밀번호 변경
-     */
-    public void changePassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 이름 변경
-     */
-    public void changeNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public void login(PasswordEncoder passwordEncoder, String credential) {
         if (!passwordEncoder.matches(credential, this.password)) {
             this.loginFailCount++;

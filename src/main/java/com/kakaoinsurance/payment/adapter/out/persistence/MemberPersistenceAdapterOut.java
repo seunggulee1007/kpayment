@@ -1,7 +1,7 @@
 package com.kakaoinsurance.payment.adapter.out.persistence;
 
 import com.kakaoinsurance.payment.application.port.out.GetMemberPort;
-import com.kakaoinsurance.payment.application.port.out.RegisterMemberPort;
+import com.kakaoinsurance.payment.application.port.out.RegisterMemberOutPort;
 import com.kakaoinsurance.payment.common.PersistenceAdapter;
 import com.kakaoinsurance.payment.common.advice.exceptions.AlreadyPresentAccountException;
 import com.kakaoinsurance.payment.common.advice.exceptions.NotValidMemberException;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements RegisterMemberPort, GetMemberPort {
+public class MemberPersistenceAdapterOut implements RegisterMemberOutPort, GetMemberPort {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;

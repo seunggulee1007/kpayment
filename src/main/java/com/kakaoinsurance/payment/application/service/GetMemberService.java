@@ -7,6 +7,11 @@ import com.kakaoinsurance.payment.common.UseCase;
 import com.kakaoinsurance.payment.domain.Member;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 회원 조회 서비스
+ *
+ * @author seunggu.lee
+ */
 @UseCase
 @RequiredArgsConstructor
 public class GetMemberService implements GetMemberUseCase {
