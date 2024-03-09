@@ -25,7 +25,7 @@ public class CancelPaymentController {
     public ApiUtil.ApiResult<CancelPaymentResponse> cancelPayment(@RequestBody CancelPaymentRequest request) {
         Payment payment = cancelPaymentUseCase.cancelPayment(request.mapToCommand());
         String cardInfo = cardDataUseCase.getCardInfo(CardInfoCommand.mapToCommand(payment));
-        return success(CancelPaymentResponse.of(request.getManagementId(), cardInfo));
+        return success(CancelPaymentResponse.of(payment.paymentId().getId(), cardInfo));
     }
 
 }

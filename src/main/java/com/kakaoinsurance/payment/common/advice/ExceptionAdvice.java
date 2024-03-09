@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.kakaoinsurance.payment.common.utils.ApiUtil.fail;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -26,13 +25,24 @@ public class ExceptionAdvice {
         NotMatchedPasswordException.class,
         NotValidMemberException.class,
         InvalidInstallmentMonthException.class,
-        NotPresentPaymentException.class,
         ConstraintViolationException.class
     })
     @ResponseStatus(BAD_REQUEST)
     public ApiUtil.ApiResult<Void> badRequest(Exception e) {
         e.printStackTrace();
         return fail(e, BAD_REQUEST);
+    }
+
+    /**
+     * 리소스를 찾을수 없는 경우 내리는 응답.
+     * 인증받지 않은 클라이언트로부터 리소스를 숨기기 위해 404 대신 전송.
+     */
+    @ExceptionHandler({
+        NotPresentPaymentException.class,
+    })
+    @ResponseStatus(FORBIDDEN)
+    public ApiUtil.ApiResult<Void> forbidden(Exception e) {
+        return fail(e, FORBIDDEN);
     }
 
 }

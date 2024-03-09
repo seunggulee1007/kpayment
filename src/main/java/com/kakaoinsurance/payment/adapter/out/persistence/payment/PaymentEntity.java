@@ -7,6 +7,7 @@ import com.kakaoinsurance.payment.domain.PaymentId;
 import com.kakaoinsurance.payment.domain.PaymentKind;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -24,6 +25,7 @@ import static com.kakaoinsurance.payment.common.utils.CommonUtil.calculateTax;
 @Table(name = "payment")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
 class PaymentEntity {
 
     @Id
