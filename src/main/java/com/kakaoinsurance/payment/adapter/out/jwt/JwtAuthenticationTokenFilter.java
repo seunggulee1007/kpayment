@@ -63,12 +63,12 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
     private void setNewAuthenticationToken(HttpServletRequest req, String authorizationToken) {
         Jwt.Claims claims = verify(authorizationToken);
         Long id = claims.getId();
-        String accountId = claims.getMemberId();
+        String memberId = claims.getMemberId();
         String email = claims.getEmail();
         String nickname = claims.getNickname();
 
-        if (nonNull(accountId) && !isEmpty(email) && nonNull(nickname)) {
-            JwtAuthenticationToken authentication = new JwtAuthenticationToken(new JwtAuthentication(id, accountId, email, nickname), null,
+        if (nonNull(memberId) && !isEmpty(email) && nonNull(nickname)) {
+            JwtAuthenticationToken authentication = new JwtAuthenticationToken(new JwtAuthentication(id, memberId, email, nickname), null,
                                                                                this.authorities(claims));
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
             SecurityContextHolder.getContext().setAuthentication(authentication);

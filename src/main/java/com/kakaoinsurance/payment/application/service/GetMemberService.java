@@ -20,7 +20,7 @@ public class GetMemberService implements GetMemberUseCase {
 
     @Override
     public Member getMember(GetMemberQuery getMemberQuery) {
-        return getMemberPort.getMemberByIdAndPassword(getMemberQuery.getAccountId(), getMemberQuery.getPassword());
+        return getMemberPort.getMemberByIdAndPassword(getMemberQuery.getMemberId(), getMemberQuery.getPassword());
     }
 
 }

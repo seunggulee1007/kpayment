@@ -1,5 +1,6 @@
-package com.kakaoinsurance.payment.adapter.out.persistence;
+package com.kakaoinsurance.payment.adapter.out.persistence.member;
 
+import com.kakaoinsurance.payment.adapter.out.persistence.UpdatedEntity;
 import com.kakaoinsurance.payment.common.advice.exceptions.NotValidMemberException;
 import com.kakaoinsurance.payment.domain.Member;
 import com.kakaoinsurance.payment.domain.MemberId;
@@ -15,15 +16,15 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
-@Table(name = "account")
-class MemeberEntity extends UpdatedEntity {
+@Table(name = "member")
+class MemberEntity extends UpdatedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private UUID accountId;
+    private UUID memberId;
 
     /**
      * 닉네임
@@ -44,7 +45,7 @@ class MemeberEntity extends UpdatedEntity {
     /* 권한 */
     @ElementCollection(fetch = LAZY)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "account_roles", joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "member_roles", joinColumns = @JoinColumn(name = "id"))
     private Set<MemberRole> roles = Set.of(MemberRole.USER);
 
     /**
@@ -57,20 +58,20 @@ class MemeberEntity extends UpdatedEntity {
      */
     private int loginFailCount;
 
-    public static MemeberEntity createNewMember(Member member, PasswordEncoder passwordEncoder) {
-        MemeberEntity memeberEntity = new MemeberEntity();
-        memeberEntity.accountId = UUID.randomUUID();
-        memeberEntity.email = member.email();
-        memeberEntity.nickname = member.nickname();
-        memeberEntity.password = passwordEncoder.encode(member.password());
-        memeberEntity.roles = member.roles();
-        return memeberEntity;
+    public static MemberEntity createNewMember(Member member, PasswordEncoder passwordEncoder) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.memberId = UUID.randomUUID();
+        memberEntity.email = member.email();
+        memberEntity.nickname = member.nickname();
+        memberEntity.password = passwordEncoder.encode(member.password());
+        memberEntity.roles = member.roles();
+        return memberEntity;
     }
 
     public Member mapToDomain() {
         return Member.builder()
             .id(this.id)
-            .memberId(MemberId.of(this.accountId.toString()))
+            .memberId(MemberId.of(this.memberId.toString()))
             .email(this.email)
             .nickname(this.nickname)
             .loginCount(this.loginCount)
@@ -89,7 +90,7 @@ class MemeberEntity extends UpdatedEntity {
 
     public void login(PasswordEncoder passwordEncoder, String credential) {
         if (!passwordEncoder.matches(credential, this.password)) {
-            this.loginFailCount++;
+            this.loginFail();
             throw new NotValidMemberException("계정이 존재하지 않거나 비밀번호가 일치하지 않습니다.");
         }
         this.afterLoginSuccess();

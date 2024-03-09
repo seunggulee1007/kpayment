@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-class UpdatedEntity extends CreatedEntity {
+public class UpdatedEntity extends CreatedEntity {
 
     @LastModifiedBy
     private Long updateBy;

@@ -59,8 +59,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         return authentication.isAssignableFrom(JwtAuthenticationToken.class);
     }
 
-    private Member getMember(Long accountId, CredentialInfo credential) {
-        return getMemberUseCase.getMember(GetMemberQuery.of(accountId, credential.getCredential()));
+    private Member getMember(Long memberId, CredentialInfo credential) {
+        return getMemberUseCase.getMember(GetMemberQuery.of(memberId, credential.getCredential()));
     }
 
     private Collection<? extends GrantedAuthority> authorities(Set<MemberRole> role) {

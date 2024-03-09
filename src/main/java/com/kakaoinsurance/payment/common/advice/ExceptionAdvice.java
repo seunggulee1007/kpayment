@@ -1,15 +1,13 @@
 package com.kakaoinsurance.payment.common.advice;
 
-import com.kakaoinsurance.payment.common.ApiUtil;
-import com.kakaoinsurance.payment.common.advice.exceptions.AlreadyPresentAccountException;
-import com.kakaoinsurance.payment.common.advice.exceptions.InvalidInstallmentMonthException;
-import com.kakaoinsurance.payment.common.advice.exceptions.NotMatchedPasswordException;
-import com.kakaoinsurance.payment.common.advice.exceptions.NotValidMemberException;
+import com.kakaoinsurance.payment.common.advice.exceptions.*;
+import com.kakaoinsurance.payment.common.utils.ApiUtil;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.kakaoinsurance.payment.common.ApiUtil.fail;
+import static com.kakaoinsurance.payment.common.utils.ApiUtil.fail;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -27,10 +25,13 @@ public class ExceptionAdvice {
         AlreadyPresentAccountException.class,
         NotMatchedPasswordException.class,
         NotValidMemberException.class,
-        InvalidInstallmentMonthException.class
+        InvalidInstallmentMonthException.class,
+        NotPresentPaymentException.class,
+        ConstraintViolationException.class
     })
     @ResponseStatus(BAD_REQUEST)
     public ApiUtil.ApiResult<Void> badRequest(Exception e) {
+        e.printStackTrace();
         return fail(e, BAD_REQUEST);
     }
 

@@ -12,6 +12,8 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
+import static com.kakaoinsurance.payment.common.utils.CommonUtil.calculateTax;
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PaymentCommand extends SelfValidating<PaymentCommand> {
@@ -44,7 +46,8 @@ public class PaymentCommand extends SelfValidating<PaymentCommand> {
     /**
      * 결제금액(100원 이상, 10억원 이하, 숫자)
      */
-    private double price;
+    @NotNull(message = "결제금액은 필수입니다.")
+    private Double price;
 
     /**
      * 부가 가치세 ( optional )
@@ -52,8 +55,7 @@ public class PaymentCommand extends SelfValidating<PaymentCommand> {
     private Long tax;
 
     public Payment mapToDomain(String cardData) {
-        validate();
-        calculateTax();
+        this.tax = calculateTax(this.tax, this.price);
         return Payment.builder()
             .cardData(cardData)
             .paymentKind(PaymentKind.PAYMENT)
@@ -77,12 +79,20 @@ public class PaymentCommand extends SelfValidating<PaymentCommand> {
     }
 
     private void validatePrice() {
-        if (this.price < 100 || this.price > 1000000000) {
+        if (isWithinRangePrice()) {
             throw new PaymentBadRequestException("결제금액은 100원 이상 10억원 이하 입니다.");
         }
-        if (this.tax != null && this.tax > this.price) {
+        if (isRightTax()) {
             throw new PaymentBadRequestException("부가 가치세가 결제금액보다 클 수 없습니다.");
         }
+    }
+
+    private boolean isRightTax() {
+        return this.tax != null && this.tax > this.price;
+    }
+
+    private boolean isWithinRangePrice() {
+        return this.price < 100 || this.price > 1000000000;
     }
 
     /**
@@ -118,24 +128,14 @@ public class PaymentCommand extends SelfValidating<PaymentCommand> {
      */
     private LocalDate getValidYmdLocalDate(int mm, String year) {
         String yyString = validYmd.substring(2, 4);
-        String yearPrefix = year.substring(2, 4);
+        String yearPrefix = year.substring(0, 2);
         int yy = Integer.parseInt(yearPrefix.concat(yyString));
         LocalDate firstDayOfValidYmd = LocalDate.of(yy, mm, 1);
         return firstDayOfValidYmd.withDayOfMonth(firstDayOfValidYmd.lengthOfMonth());
     }
 
-    /**
-     * 부가 가치세를 계산한다.
-     * <p>자동계산 수식 : 결제금액 / 11, 소수점이하 반올림</p>
-     * <p>결제금액이 1,000원일 경우, 자동계산된 부가가치세는 91원입니다.</p>
-     */
-    private void calculateTax() {
-        if (this.tax == null) {
-            this.tax = Math.round(this.price / 11);
-        }
-    }
-
     public String getCardData(String separator) {
+        validate();
         return this.cardNumber.concat(separator).concat(this.validYmd).concat(separator).concat(this.cvc);
     }
 

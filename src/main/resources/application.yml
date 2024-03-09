@@ -3,7 +3,7 @@ jwt:
     header: Authorization
     issuer: seunggulee
     client-secret: kakaopayinsurancetlzmfltqlalfqjsgh
-    expiry-seconds: 300
+    token-validity-in-milliseconds: 300
 
 
 

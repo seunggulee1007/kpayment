@@ -1,4 +1,4 @@
-package com.kakaoinsurance.payment.common;
+package com.kakaoinsurance.payment.common.utils;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

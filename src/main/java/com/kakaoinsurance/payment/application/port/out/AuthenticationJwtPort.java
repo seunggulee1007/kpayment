@@ -5,6 +5,6 @@ import com.kakaoinsurance.payment.domain.Member;
 
 public interface AuthenticationJwtPort {
 
-    JwtToken authentication(Member account);
+    JwtToken authentication(Member member);
 
 }

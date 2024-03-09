@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class GetMemberQuery extends SelfValidating<GetMemberQuery> {
 
-    private Long accountId;
+    private Long memberId;
 
     private String password;
 
-    public static GetMemberQuery of(Long accountId, String password) {
+    public static GetMemberQuery of(Long memberId, String password) {
         GetMemberQuery getMemberQuery = new GetMemberQuery();
-        getMemberQuery.accountId = accountId;
+        getMemberQuery.memberId = memberId;
         getMemberQuery.password = password;
         getMemberQuery.validateSelf();
         return getMemberQuery;

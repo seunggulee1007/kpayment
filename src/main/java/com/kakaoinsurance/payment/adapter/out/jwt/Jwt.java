@@ -79,9 +79,9 @@ public class Jwt {
             if (!idClaim.isNull()) {
                 this.id = idClaim.asLong();
             }
-            Claim accountIdClaim = decodedJWT.getClaim(JwtInfo.MEMBER_ID.name());
-            if (!accountIdClaim.isNull()) {
-                this.memberId = accountIdClaim.asString();
+            Claim memberIdClaim = decodedJWT.getClaim(JwtInfo.MEMBER_ID.name());
+            if (!memberIdClaim.isNull()) {
+                this.memberId = memberIdClaim.asString();
             }
             Claim emailClaim = decodedJWT.getClaim(JwtInfo.EMAIL.name());
             if (!emailClaim.isNull()) {

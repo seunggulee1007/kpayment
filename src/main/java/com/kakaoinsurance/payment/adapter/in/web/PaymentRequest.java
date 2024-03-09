@@ -42,7 +42,7 @@ public class PaymentRequest {
     /**
      * 부가 가치세 ( optional )
      */
-    private Double tax;
+    private Long tax;
 
     public PaymentCommand mapToCommand() {
         PaymentCommand command = new PaymentCommand();

@@ -7,10 +7,6 @@ package com.kakaoinsurance.payment.common.advice.exceptions;
  */
 public class PaymentBadRequestException extends RuntimeException {
 
-    public PaymentBadRequestException() {
-        super();
-    }
-
     public PaymentBadRequestException(String message) {
         super(message);
     }
