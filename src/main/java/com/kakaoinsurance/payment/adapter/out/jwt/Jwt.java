@@ -57,10 +57,6 @@ public class Jwt {
         return new Claims(jwtVerifier.verify(token));
     }
 
-    public boolean validateToken(String token) {
-        return verify(token).id != null;
-    }
-
     @Data
     public static class Claims {
 

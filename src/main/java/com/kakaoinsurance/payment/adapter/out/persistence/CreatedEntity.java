@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CreatedEntity {
 
     @CreatedBy
-    protected Long createdBy;
+    protected String createdBy;
 
     @CreatedDate
     protected LocalDateTime createdDate;

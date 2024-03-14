@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "f105bf1d-c5bb-455d-b0ec-ea20c0f93931",
+		"name": "kakaoinsurance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5038889"
+	},
+	"item": [
+		{
+			"name": "로그인",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"if (data.response.hasOwnProperty(\"accessToken\")) {",
+							"    postman.setEnvironmentVariable(\"ACCESS_TOKEN\", data.response.accessToken);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"seunggu.lee@kakaoinsurance.com\",\n    \"password\": \"test1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9232/api/member/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9232",
+					"path": [
+						"api",
+						"member",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "결제",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardNumber\": \"1234567890\",\n    \"validYmd\": \"1224\",\n    \"cvc\": \"112\",\n    \"installmentMonth\": \"01\",\n    \"price\": 50000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9232/api/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9232",
+					"path": [
+						"api",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "부분결제 취소",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"managementId\": \"P3756061782600525273\",\n    \"cancelPrice\" : 50000,\n    \"cancelTax\" : 20000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9232/api/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9232",
+					"path": [
+						"api",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "전체결제 취소",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"managementId\": \"P3756061782600525273\",\n    \"cancelPrice\" : 50000,\n    \"cancelTax\" : 20000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9232/api/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9232",
+					"path": [
+						"api",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

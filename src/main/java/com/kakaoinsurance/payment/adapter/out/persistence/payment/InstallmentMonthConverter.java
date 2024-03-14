@@ -1,6 +1,6 @@
 package com.kakaoinsurance.payment.adapter.out.persistence.payment;
 
-import com.kakaoinsurance.payment.domain.InstallmentMonth;
+import com.kakaoinsurance.payment.domain.payment.InstallmentMonth;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

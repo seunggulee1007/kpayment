@@ -1,6 +1,6 @@
 package com.kakaoinsurance.payment.adapter.out.persistence.card;
 
-import com.kakaoinsurance.payment.application.port.out.CardDataOutPort;
+import com.kakaoinsurance.payment.application.port.out.carddata.CardDataOutPort;
 import com.kakaoinsurance.payment.common.annotations.ExternalAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,8 +15,8 @@ public class CardDataPortAdapter implements CardDataOutPort {
     private final CardDataRepository cardDataRepository;
 
     @Override
-    public void executeCardRequest(String cardData) {
-        CardDataEntity entity = CardDataEntity.of(cardData);
+    public void executeCardRequest(String cardData, String managementId) {
+        CardDataEntity entity = CardDataEntity.of(cardData, managementId);
         cardDataRepository.save(entity);
     }
 

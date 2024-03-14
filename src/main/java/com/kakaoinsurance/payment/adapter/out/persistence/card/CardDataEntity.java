@@ -14,10 +14,14 @@ public class CardDataEntity extends CreatedEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20)
+    private String managementId;
+
     private String cardData;
 
-    public static CardDataEntity of(String cardData) {
+    public static CardDataEntity of(String cardData, String managementId) {
         CardDataEntity entity = new CardDataEntity();
+        entity.managementId = managementId;
         entity.cardData = cardData;
         return entity;
     }

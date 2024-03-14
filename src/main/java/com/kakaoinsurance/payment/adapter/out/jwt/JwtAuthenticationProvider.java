@@ -1,9 +1,9 @@
 package com.kakaoinsurance.payment.adapter.out.jwt;
 
-import com.kakaoinsurance.payment.application.port.in.GetMemberQuery;
-import com.kakaoinsurance.payment.application.port.in.GetMemberUseCase;
-import com.kakaoinsurance.payment.domain.Member;
-import com.kakaoinsurance.payment.domain.MemberRole;
+import com.kakaoinsurance.payment.application.port.in.member.GetMemberQuery;
+import com.kakaoinsurance.payment.application.port.in.member.GetMemberUseCase;
+import com.kakaoinsurance.payment.domain.member.Member;
+import com.kakaoinsurance.payment.domain.member.MemberRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationProvider;

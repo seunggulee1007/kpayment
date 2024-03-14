@@ -1,10 +1,10 @@
 package com.kakaoinsurance.payment.adapter.out.persistence.payment;
 
 import com.kakaoinsurance.payment.common.advice.exceptions.PaymentBadRequestException;
-import com.kakaoinsurance.payment.domain.InstallmentMonth;
-import com.kakaoinsurance.payment.domain.Payment;
-import com.kakaoinsurance.payment.domain.PaymentId;
-import com.kakaoinsurance.payment.domain.PaymentKind;
+import com.kakaoinsurance.payment.domain.payment.InstallmentMonth;
+import com.kakaoinsurance.payment.domain.payment.Payment;
+import com.kakaoinsurance.payment.domain.payment.PaymentId;
+import com.kakaoinsurance.payment.domain.payment.PaymentKind;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kakaoinsurance.payment.common.DefaultMessage.*;
 import static com.kakaoinsurance.payment.common.utils.CommonUtil.calculateTax;
 
 @Getter
@@ -26,7 +27,7 @@ import static com.kakaoinsurance.payment.common.utils.CommonUtil.calculateTax;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
-class PaymentEntity {
+public class PaymentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +117,8 @@ class PaymentEntity {
             .installmentMonth(this.installmentMonth)
             .price(this.price)
             .tax(this.tax)
+            .remainPrice(this.remainPrice)
+            .remainTax(this.remainTax)
             .originalManagementId(this.parent == null ? null : this.parent.paymentId)
             .paidBy(this.paidBy)
             .paidAt(this.paidAt)
@@ -130,10 +133,57 @@ class PaymentEntity {
      */
     public PaymentEntity cancel(Payment payment) {
         validatePrice(payment.price());
-        Long cancelTax = calculateTax(payment.tax(), payment.price());
+        double calculatePrice = this.remainPrice - payment.price();
+        Long cancelTax = calculateCancelTax(payment, calculatePrice);
         if (!cancelTax.equals(this.tax)) {
-            throw new PaymentBadRequestException("전체 취소일 경우 부가세 금액이 일치해야 합니다.");
+            throw new PaymentBadRequestException(NOT_VALID_TAX.getMessage());
         }
+        this.remainPrice -= payment.price();
+        this.remainTax -= cancelTax;
+        return this.getCancelEntity(payment, cancelTax);
+    }
+
+    private void validatePrice(double cancelPrice) {
+        if (this.remainPrice < this.price) {
+            throw new PaymentBadRequestException(ALL_CANCEL_AVAILABLE.getMessage());
+        }
+        if (this.price != cancelPrice) {
+            throw new PaymentBadRequestException(NOT_MATCHED_CANCEL_PRICE.getMessage());
+        }
+    }
+
+    public PaymentEntity partCancel(Payment payment) {
+        if (this.remainPrice == 0) {
+            throw new PaymentBadRequestException(COMPLETED_CANCEL.getMessage());
+        }
+        Double cancelPrice = payment.price();
+        if (cancelPrice > this.remainPrice) {
+            throw new PaymentBadRequestException(CANCEL_PRICE_LATHER_THEN_PRICE.getMessage());
+        }
+        double calculatePrice = this.remainPrice - payment.price();
+        Long cancelTax = this.calculateCancelTax(payment, calculatePrice);
+        if (cancelTax > this.remainTax) {
+            throw new PaymentBadRequestException(NOT_VALID_TAX.getMessage());
+        }
+        this.remainPrice = calculatePrice;
+        this.remainTax -= cancelTax;
+        return this.getCancelEntity(payment, cancelTax);
+    }
+
+    private Long calculateCancelTax(Payment payment, double calculatePrice) {
+        Long cancelTax = payment.tax();
+        if (calculatePrice == 0) {
+            if (cancelTax == null) {
+                return this.remainTax;
+            } else if (!cancelTax.equals(this.remainTax)) {
+                throw new PaymentBadRequestException(NOT_VALID_TAX.getMessage());
+            }
+            return cancelTax;
+        }
+        return calculateTax(payment.tax(), payment.price());
+    }
+
+    private PaymentEntity getCancelEntity(Payment payment, Long cancelTax) {
         PaymentEntity entity = new PaymentEntity();
         entity.parent = this;
         entity.paymentId = PaymentIdGenerator.generate();
@@ -143,20 +193,8 @@ class PaymentEntity {
         entity.price = payment.price();
         entity.tax = cancelTax;
 
-        this.remainPrice -= payment.price();
-        this.remainTax -= cancelTax;
         this.cancelList.add(entity);
-
         return entity;
-    }
-
-    private void validatePrice(double cancelPrice) {
-        if (this.remainPrice < this.price) {
-            throw new PaymentBadRequestException("결제에 대한 전체취소는 1번만 가능합니다.");
-        }
-        if (this.price != cancelPrice) {
-            throw new PaymentBadRequestException("전체 취소일 경우 결제 금액과 취소 금액이 일치해야 합니다.");
-        }
     }
 
 }

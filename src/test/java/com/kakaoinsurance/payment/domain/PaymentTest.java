@@ -1,5 +1,9 @@
 package com.kakaoinsurance.payment.domain;
 
+import com.kakaoinsurance.payment.domain.payment.InstallmentMonth;
+import com.kakaoinsurance.payment.domain.payment.Payment;
+import com.kakaoinsurance.payment.domain.payment.PaymentId;
+import com.kakaoinsurance.payment.domain.payment.PaymentKind;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
