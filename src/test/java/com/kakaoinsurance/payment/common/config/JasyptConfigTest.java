@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@DisplayName("암복호화 테스트")
+@DisplayName("Jasypt 암복호화 테스트")
 class JasyptConfigTest extends RedisTestContainer {
 
     @Autowired
