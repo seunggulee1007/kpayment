@@ -28,7 +28,7 @@ public class CommonUtil {
      * @param number 카드 번호
      * @return 마스킹 처리된 카드 번호
      */
-    private static String maskString(String number, String masking) {
+    public static String maskString(String number, String masking) {
         if (!StringUtils.hasLength(number) || number.length() <= 9) {
             return number;
         }
