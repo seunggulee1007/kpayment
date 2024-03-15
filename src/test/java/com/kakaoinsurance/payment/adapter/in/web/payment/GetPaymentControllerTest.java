@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @MockMvcTest
+@DisplayName("결제 조회 Controller 테스트")
 class GetPaymentControllerTest extends RedisTestContainer {
 
     @Autowired

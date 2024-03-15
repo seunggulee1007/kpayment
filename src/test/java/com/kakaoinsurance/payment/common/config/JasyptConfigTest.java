@@ -1,5 +1,6 @@
 package com.kakaoinsurance.payment.common.config;
 
+import com.kakaoinsurance.payment.common.container.RedisTestContainer;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class JasyptConfigTest {
+@DisplayName("암복호화 테스트")
+class JasyptConfigTest extends RedisTestContainer {
 
     @Autowired
     private StringEncryptor jasyptStringEncryptor;
@@ -25,6 +27,7 @@ class JasyptConfigTest {
         // when
         String decrypted = jasyptStringEncryptor.decrypt(encrypt);
         // then
+        assertThat(encrypt).isNotEqualTo(name);
         assertThat(decrypted).isEqualTo(name);
 
     }
